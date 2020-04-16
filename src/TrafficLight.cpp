@@ -98,7 +98,7 @@ void TrafficLight::cycleThroughPhases()
                 setCurrentPhase(TrafficLightPhase::red);
             }
 
-            std::async(std::launch::async, &MessageQueue<TrafficLightPhase>::send, tlQueue, std::move(getCurrentPhase()));
+            std::async(std::launch::async, &MessageQueue<TrafficLightPhase>::send, _tlQueue, std::move(getCurrentPhase()));
 
             lastUpdate = std::chrono::system_clock::now();
             change_time = rand_time();
