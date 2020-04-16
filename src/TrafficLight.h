@@ -39,12 +39,13 @@ class TrafficLight : public TrafficObject
 {
 public:
     // constructor / destructor
-    TrafficLight()
+    TrafficLight();
 
-    //~TrafficLight()
+    //~TrafficLight();
 
     // getters / setters
     TrafficLightPhase getCurrentPhase();
+    void setCurrentPhase(TrafficLightPhase tlp);
     // typical behaviour methods
     void waitForGreen();
     void simulate();

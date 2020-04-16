@@ -42,6 +42,11 @@ TrafficLightPhase TrafficLight::getCurrentPhase()
     return _currentPhase;
 }
 
+void TrafficLight::setCurrentPhase(TrafficLightPhase tlp)
+{
+    _currentPhase = tlp;
+}
+
 void TrafficLight::simulate()
 {
     // FP.2b : Finally, the private method „cycleThroughPhases“ should be started in a thread when the public method „simulate“ is called. To do this, use the thread queue in the base class. 
@@ -65,17 +70,17 @@ void TrafficLight::cycleThroughPhases()
         delta_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - lastUpdate).count();
 
         if(delta_time >= change_time){
-            if(_currentPhase == TrafficLightPhase::red){
-                _currentPhase == TrafficLightPhase::green
+            if(getCurrentPhase() == TrafficLightPhase::red){
+                setCurrentPhase(TrafficLightPhase::green);
             } else {
-                _currentPhase == TrafficLightPhase::red
+                setCurrentPhase(TrafficLightPhase::red);
             }
+
+            lastUpdate = std::chrono::system_clock::now();
+            change_time = rand_time();
         }
 
         // message send wait.
-
-        lastUpdate = std::chrono::system_clock::now();
-        change_time = rand_time();
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
