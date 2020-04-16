@@ -5,29 +5,31 @@
 #include <thread>
 #include <mutex>
 
-enum ObjectType
-{
+enum ObjectType {
     noObject,
     objectVehicle,
     objectIntersection,
     objectStreet,
 };
 
-class TrafficObject
-{
+class TrafficObject {
 public:
     // constructor / desctructor
     TrafficObject();
+
     ~TrafficObject();
 
     // getter and setter
     int getID() { return _id; }
+
     void setPosition(double x, double y);
+
     void getPosition(double &x, double &y);
+
     ObjectType getType() { return _type; }
 
     // typical behaviour methods
-    virtual void simulate(){};
+    virtual void simulate() {};
 
 protected:
     ObjectType _type;                 // identifies the class type
