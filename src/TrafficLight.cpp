@@ -1,10 +1,11 @@
 #include <iostream>
 #include <random>
+#include <functional>
 #include "TrafficLight.h"
 
 /* Implementation of class "MessageQueue" */
 
-/* 
+/*
 template <typename T>
 T MessageQueue<T>::receive()
 {
@@ -23,7 +24,7 @@ void MessageQueue<T>::send(T &&msg)
 
 /* Implementation of class "TrafficLight" */
 
-/* 
+
 TrafficLight::TrafficLight()
 {
     _currentPhase = TrafficLightPhase::red;
@@ -52,7 +53,29 @@ void TrafficLight::cycleThroughPhases()
     // FP.2a : Implement the function with an infinite loop that measures the time between two loop cycles 
     // and toggles the current phase of the traffic light between red and green and sends an update method 
     // to the message queue using move semantics. The cycle duration should be a random value between 4 and 6 seconds. 
-    // Also, the while-loop should use std::this_thread::sleep_for to wait 1ms between two cycles. 
-}
+    // Also, the while-loop should use std::this_thread::sleep_for to wait 1ms between two cycles.
+    std::default_random_engine generator(time(nullptr));
+    std::uniform_int_distribution<int> distribution(4000,6000);
+    auto rand_time = std::bind ( distribution, generator );
+    auto lastUpdate = std::chrono::system_clock::now();
+    int change_time = rand_time();
+    int delta_time;
 
-*/
+    while(true){
+        delta_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - lastUpdate).count();
+
+        if(delta_time >= change_time){
+            if(_currentPhase == TrafficLightPhase::red){
+                _currentPhase == TrafficLightPhase::green
+            } else {
+                _currentPhase == TrafficLightPhase::red
+            }
+        }
+
+        // message send wait.
+
+        lastUpdate = std::chrono::system_clock::now();
+        change_time = rand_time();
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+}
